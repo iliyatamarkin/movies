@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Seat } from "../types/Seat";
 import { BookedSeats, Booking } from "../types/Booking";
 
-interface SeatsState {
+export interface SeatsState {
   bookedSeats: Record<string, string[]>;
   selectedSeats: Seat[];
 }
