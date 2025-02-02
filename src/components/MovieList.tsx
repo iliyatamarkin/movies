@@ -15,6 +15,7 @@ export const MovieList: React.FC = () => {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [minRating, setMinRating] = useState<number>(0);
   
   const allGenres = Array.from(
     new Set(items.flatMap(movie => movie.genre))
@@ -24,7 +25,8 @@ export const MovieList: React.FC = () => {
     const matchesSearch = movie.title.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesGenre = selectedGenres.length === 0 || 
       selectedGenres.some(genre => movie.genre.includes(genre));
-    return matchesSearch && matchesGenre;
+    const matchesRating = movie.rating >= minRating;
+    return matchesSearch && matchesGenre && matchesRating;
   });
 
   useEffect(() => {
@@ -49,8 +51,10 @@ export const MovieList: React.FC = () => {
         searchQuery={searchQuery}
         selectedGenres={selectedGenres}
         allGenres={allGenres}
+        minRating={minRating}
         onSearchChange={setSearchQuery}
         onGenresChange={setSelectedGenres}
+        onRatingChange={setMinRating}
       />
 
       <Typography variant="subtitle1" sx={{ mb: 2 }}>
@@ -59,7 +63,7 @@ export const MovieList: React.FC = () => {
 
       <Grid container spacing={{ xs: 1.5, sm: 2 ,md: 3}}>
         {filteredMovies.map((movie) => (
-          <Grid  size={{ md: 4 }} key={movie.id}>
+          <Grid  size={{ xs:12, sm:6, md:4 }} key={movie.id}>
             <MovieCard
               movie={movie}
               onClick={() => navigate(`/movie/${movie.id}`)}

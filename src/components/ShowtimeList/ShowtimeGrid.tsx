@@ -10,7 +10,7 @@ interface ShowtimeGridProps {
 export const ShowtimeGrid: React.FC<ShowtimeGridProps> = ({ showtimes, movieId }) => (
   <Grid container spacing={{ xs: 1.5, sm: 2 }}>
     {Object.values(showtimes).map(showtime => (
-      <Grid size={4} key={showtime.id}>
+      <Grid  size={{ xs:12, sm:6, md:4 }} key={showtime.id}>
         <ShowtimeCard showtime={showtime} movieId={movieId} />
       </Grid>
     ))}

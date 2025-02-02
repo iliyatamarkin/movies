@@ -7,7 +7,8 @@ import {
   Stack, 
   Box, 
   Chip, 
-  OutlinedInput 
+  OutlinedInput,
+  Slider,
 } from '@mui/material';
 import { Search } from '@mui/icons-material';
 
@@ -15,16 +16,20 @@ interface SearchFiltersProps {
   searchQuery: string;
   selectedGenres: string[];
   allGenres: string[];
-  onSearchChange: (query: string) => void;
-  onGenresChange: (genres: string[]) => void;
+  minRating: number;
+  onSearchChange: (value: string) => void;
+  onGenresChange: (value: string[]) => void;
+  onRatingChange: (value: number) => void;
 }
 
 export const SearchFilters: React.FC<SearchFiltersProps> = ({
   searchQuery,
   selectedGenres,
   allGenres,
+  minRating,
   onSearchChange,
   onGenresChange,
+  onRatingChange,
 }) => (
   <Stack 
     direction={{ xs: 'column', sm: 'row' }} 
@@ -62,6 +67,21 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
           </MenuItem>
         ))}
       </Select>
+    </FormControl>
+    <FormControl sx={{ minWidth: 200 }}>
+      <InputLabel shrink>Minimum Rating</InputLabel>
+      <Slider
+        value={minRating}
+        onChange={(_, value) => onRatingChange(value as number)}
+        min={0}
+        max={10}
+        step={0.5}
+        valueLabelDisplay="auto"
+        marks={[
+          { value: 0, label: '0' },
+          { value: 10, label: '10' }
+        ]}
+      />
     </FormControl>
   </Stack>
 ); 
